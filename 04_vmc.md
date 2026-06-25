@@ -27,7 +27,7 @@ Virtual Model Control，虚拟模型控制，在机器人的**任务空间**（�
 
 同时，在串腿上，我们希望能够消除气弹簧的影响，因此也需要将气弹簧等效到我们建模的方向上，同时产生一个力和一个力矩。
 
-### F_L, τ_p
+### F_L, τ_l
 
 | **Note** · 坐标系 |
 | :-- |
@@ -36,7 +36,7 @@ Virtual Model Control，虚拟模型控制，在机器人的**任务空间**（�
 
 ![pendulum-1](assets/pendulum-1.png)
 
-我们的电机放在 $`\phi_{1},\phi_{4}`$ ，分别对应力矩 $`\tau_{1},\tau_{4}`$ ，我们能够得到电机的角度和速度反馈，那么为了求解完整的五连杆，我们需要通过 $`\phi_{1},\phi_{4}`$ 求得 $`\phi_{2},\phi_{3}`$ ，再进一步求出 $`\phi`$ 和 $`L`$ 
+我们的电机放在 $`\phi_{1},\phi_{4}`$ ，分别对应力矩 $`\tau_{1},\tau_{4}`$ ，我们能够得到电机的角度和速度反馈，那么为了求解完整的五连杆，我们需要通过 $`\phi_{1},\phi_{4}`$ 求得 $`\phi_{2},\phi_{3}`$ ，再进一步求出 $`\phi`$ 和 $`l`$ 
 
 分析点 $`C`$ 坐标，我们有
 
@@ -152,8 +152,8 @@ L_{1}\dot{\phi}_{1}\cos \phi_{1}+L_{2}\dot{\phi}_{2}\cos \phi_{2} &= L_{1}\dot{\
 \begin{equation}
 \left\{
 \begin{aligned}
-\dot{\phi}_{2}= \frac{L_{1}(\dot{\phi}_{1}\sin(\phi_{3}-\phi_{1})+\dot{\phi}_{4}(\phi_{4}-\phi_{3}))}{L_{2}\sin(\phi_{2}-\phi_{3})} \\
-\dot{\phi}_{3}= \frac{L_{1}(\dot{\phi}_{1}\sin(\phi_{2}-\phi_{1})+\dot{\phi}_{4}(\phi_{4}-\phi_{2}))}{L_{2}\sin(\phi_{2}-\phi_{3})}
+\dot{\phi}_{2}= \frac{L_{1}(\dot{\phi}_{1}\sin(\phi_{3}-\phi_{1})+\dot{\phi}_{4}\sin(\phi_{4}-\phi_{3}))}{L_{2}\sin(\phi_{2}-\phi_{3})} \\
+\dot{\phi}_{3}= \frac{L_{1}(\dot{\phi}_{1}\sin(\phi_{2}-\phi_{1})+\dot{\phi}_{4}\sin(\phi_{4}-\phi_{2}))}{L_{2}\sin(\phi_{2}-\phi_{3})}
 \end{aligned}
 \right.
 \end{equation}
@@ -177,8 +177,8 @@ F_{y}
 
 ```math
 q=\left[\begin{matrix}
-\dot{\phi}_{1} \\
-\dot{\phi}_{4}
+\phi_{1} \\
+\phi_{4}
 \end{matrix}\right],\tau=\left[ \begin{matrix}
 \tau_{1} \\
 \tau_{4}
@@ -285,23 +285,23 @@ F_{y}
 \end{matrix} \right]
 ```
 
-在转化到 $`F_{L},\tau_{P}`$
+在转化到 $`F_{L},\tau_{l}`$
 
 ```math
 \left[ \begin{matrix}
 F_{L} \\
-\tau_{P}
+\tau_{l}
 \end{matrix} \right]
 =\left[  \begin{matrix}
 1 & 0 \\
-0 & L
+0 & l
 \end{matrix} \right]\left[ \begin{matrix}
 F_{L} \\
 F_{T}
 \end{matrix} \right]
 =\left[  \begin{matrix}
 1 & 0 \\
-0 & L
+0 & l
 \end{matrix} \right]\left[\begin{matrix}
 \cos \phi & \sin \phi \\
 -\sin \phi & \cos \phi
@@ -316,7 +316,7 @@ F_{y}
 ```math
 M=\left[  \begin{matrix}
 1 & 0 \\
-0 & L
+0 & l
 \end{matrix} \right],R=\left[\begin{matrix}
 \cos \phi & \sin \phi \\
 -\sin \phi & \cos \phi
@@ -328,7 +328,7 @@ M=\left[  \begin{matrix}
 ```math
 \left[ \begin{matrix}
 F_{L} \\
-\tau_{p}
+\tau_{l}
 \end{matrix} \right]=MR\left[\begin{matrix}
 F_{x} \\
 F_{y}
@@ -337,7 +337,7 @@ F_{x} \\
 F_{y}
 \end{matrix} \right]=R^{-1}M^{-1}\left[ \begin{matrix}
 F_{L} \\
-\tau_{P}
+\tau_{l}
 \end{matrix} \right]
 ```
 
@@ -349,17 +349,17 @@ F_{L} \\
 \tau_{4}
 \end{matrix} \right]=J^{T}R^{-1}M^{-1}\left[ \begin{matrix}
 F_{L} \\
-\tau_{p}
+\tau_{l}
 \end{matrix} \right]
 ```
 
 ```math
 \left[ \begin{matrix}
-\dot{L} \\
+\dot{l} \\
 \dot{\phi}
 \end{matrix} \right]=\left[  \begin{matrix}
 1 & 0 \\
-0 & \frac{1}{L}
+0 & \frac{1}{l}
 \end{matrix} \right]\left[\begin{matrix}
 \cos \phi & \sin \phi \\
 -\sin \phi & \cos \phi
@@ -368,7 +368,7 @@ F_{L} \\
 \dot{y}_{C}
 \end{matrix} \right]=\left[  \begin{matrix}
 1 & 0 \\
-0 & \frac{1}{L}
+0 & \frac{1}{l}
 \end{matrix} \right]RJ\left[\begin{matrix}
 \dot{\phi}_{1} \\
 \dot{\phi}_{4}
@@ -458,8 +458,8 @@ F_{S_{y}}
 
 ```math
 q=\left[\begin{matrix}
-\dot{\phi}_{1} \\
-\dot{\phi}_{4}
+\phi_{1} \\
+\phi_{4}
 \end{matrix}\right],\tau=\left[ \begin{matrix}
 \tau_{1} \\
 \tau_{4}
@@ -480,11 +480,11 @@ q=\left[\begin{matrix}
 
 ```math
 x=\left[\begin{matrix}
-L \\
+l \\
 \phi
 \end{matrix}\right],F=\left[\begin{matrix}
 F_{L} \\
-\tau_{p}
+\tau_{l}
 \end{matrix} \right]
 ```
 
@@ -533,14 +533,14 @@ l= L_{1}\cos \alpha+\sqrt{ L_{2}^{2}-L_{1}^2\sin^{2}\alpha }
 解得
 
 ```math
-\dot{l}=\frac{lL_{1}\sin \alpha}{L_{1}\cos \alpha-1}\dot{\alpha}=\frac{lL_{1}\sin \alpha}{2(L_{1}\cos \alpha-1)}(\dot{\phi}_{1}-\dot{\phi}_{4})
+\dot{l}=\frac{lL_{1}\sin \alpha}{L_{1}\cos \alpha-l}\dot{\alpha}=\frac{lL_{1}\sin \alpha}{2(L_{1}\cos \alpha-l)}(\dot{\phi}_{1}-\dot{\phi}_{4})
 ```
 
 有
 
 ```math
 J=\left[ \begin{matrix}
-\frac{lL_{1}\sin \alpha}{2(L_{1}\cos \alpha-1)} & -\frac{lL_{1}\sin \alpha}{2(L_{1}\cos \alpha-1)} \\
+\frac{lL_{1}\sin \alpha}{2(L_{1}\cos \alpha-l)} & -\frac{lL_{1}\sin \alpha}{2(L_{1}\cos \alpha-l)} \\
 \frac{1}{2}  & \frac{1}{2}
 \end{matrix} \right]
 ```
@@ -549,11 +549,11 @@ J=\left[ \begin{matrix}
 
 ```math
 \left[\begin{matrix}
-L \\
-\phi
+\dot{l} \\
+\dot{\phi}
 \end{matrix}\right]=J\left[\begin{matrix}
-\phi_{1} \\
-\phi_{4}
+\dot{\phi}_{1} \\
+\dot{\phi}_{4}
 \end{matrix}\right]
 ```
 
@@ -565,7 +565,7 @@ L \\
 \tau_{4}
 \end{matrix} \right]=J^{T}\left[ \begin{matrix}
 F_{L} \\
-\tau_{p}
+\tau_{l}
 \end{matrix} \right]
 ```
 
@@ -584,7 +584,7 @@ F_{L} \\
 \left\{
 \begin{aligned}
 l_{s}^{2}&=d_{2}^2+d_{3}^2-2d_{2}d_{3}\cos \beta_{s} \\
-L^2&=L_{1}^2+L_{2}^2-2L_{1}L_{2}\cos \theta
+l^2&=L_{1}^2+L_{2}^2-2L_{1}L_{2}\cos \theta
 \end{aligned}
 \right.
 \end{equation}
@@ -594,8 +594,8 @@ L^2&=L_{1}^2+L_{2}^2-2L_{1}L_{2}\cos \theta
 \begin{equation}
 \left\{
 \begin{aligned}
-2l_{s}\delta l_{s}&=2d_{2}d_{3}\delta s\sin\beta_{s}=2d_{2}d_{3}\delta \theta\sin \beta_{s} \\
-2L\delta L&=2L_{1}L_{2}\delta \theta\sin \theta
+2l_{s}\delta l_{s}&=2d_{2}d_{3}\sin\beta_{s}\,\delta \beta_{s}=2d_{2}d_{3}\delta \theta\sin \beta_{s} \\
+2l\delta l&=2L_{1}L_{2}\delta \theta\sin \theta
 \end{aligned}
 \right.
 \end{equation}
@@ -606,7 +606,7 @@ L^2&=L_{1}^2+L_{2}^2-2L_{1}L_{2}\cos \theta
 \left\{
 \begin{aligned}
 \delta l_{s}&=\frac{d_{2}d_{3}\delta \theta\sin \beta_{s}}{l_{s}} \\
-\delta L&=\frac{L_{1}L_{2}\delta \theta\sin \theta}{L}
+\delta l&=\frac{L_{1}L_{2}\delta \theta\sin \theta}{l}
 \end{aligned}
 \right.
 \end{equation}
@@ -615,13 +615,13 @@ L^2&=L_{1}^2+L_{2}^2-2L_{1}L_{2}\cos \theta
 假设气弹簧只提供了推力，由虚功原理
 
 ```math
-F_{Ls}\delta L=F_{s}\delta l_{s}
+F_{Ls}\delta l=F_{s}\delta l_{s}
 ```
 
 等效力
 
 ```math
-F_{Ls}=\frac{\delta l_{s}}{\delta L}F_{s}=\frac{d_{2}d_{3}L\sin \beta_{s}}{L_{1}L_{2}l_{s}\sin \theta}F_{s}
+F_{Ls}=\frac{\delta l_{s}}{\delta l}F_{s}=\frac{d_{2}d_{3}l\sin \beta_{s}}{L_{1}L_{2}l_{s}\sin \theta}F_{s}
 ```
 
 这里最后分解到 $`\phi_{1},\phi_{4}`$ 的力矩作用效果可以视为是相同的，但是无论是从安装方式还是非对称性上讲，对 $`\phi_{1},\phi_{4}`$ 的作用效果不应该是一样的，且对等效腿关节的旋转也可能无法忽略。
