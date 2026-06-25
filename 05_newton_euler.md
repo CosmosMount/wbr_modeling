@@ -1,43 +1,4 @@
-1. [约定](#%E7%BA%A6%E5%AE%9A)
-2. [单腿建模](#%E5%8D%95%E8%85%BF%E5%BB%BA%E6%A8%A1)
-	1. [轮质心](#%E8%BD%AE%E8%B4%A8%E5%BF%83)
-	2. [腿质心](#%E8%85%BF%E8%B4%A8%E5%BF%83)
-	3. [机体质心](#%E6%9C%BA%E4%BD%93%E8%B4%A8%E5%BF%83)
-	4. [控制律](#%E6%8E%A7%E5%88%B6%E5%BE%8B)
-		1. [水平运动方程](#%E6%B0%B4%E5%B9%B3%E8%BF%90%E5%8A%A8%E6%96%B9%E7%A8%8B)
-		2. [机体转动方程](#%E6%9C%BA%E4%BD%93%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-		3. [腿部转动方程](#%E8%85%BF%E9%83%A8%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-3. [双腿建模](#%E5%8F%8C%E8%85%BF%E5%BB%BA%E6%A8%A1)
-	1. [轮质心](#%E8%BD%AE%E8%B4%A8%E5%BF%83)
-		1. [左轮](#%E5%B7%A6%E8%BD%AE)
-		2. [右轮](#%E5%8F%B3%E8%BD%AE)
-		3. [左右支持力](#%E5%B7%A6%E5%8F%B3%E6%94%AF%E6%8C%81%E5%8A%9B)
-	2. [腿质心](#%E8%85%BF%E8%B4%A8%E5%BF%83)
-		1. [左腿](#%E5%B7%A6%E8%85%BF)
-		2. [右腿](#%E5%8F%B3%E8%85%BF)
-	3. [机体质心](#%E6%9C%BA%E4%BD%93%E8%B4%A8%E5%BF%83)
-	4. [控制律](#%E6%8E%A7%E5%88%B6%E5%BE%8B)
-		1. [水平转动方程](#%E6%B0%B4%E5%B9%B3%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-		2. [yaw转动方程](#yaw%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-		3. [机体转动方程](#%E6%9C%BA%E4%BD%93%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-		4. [腿部转动方程](#%E8%85%BF%E9%83%A8%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-4. [双腿质心偏移建模](#%E5%8F%8C%E8%85%BF%E8%B4%A8%E5%BF%83%E5%81%8F%E7%A7%BB%E5%BB%BA%E6%A8%A1)
-	1. [轮转轴](#%E8%BD%AE%E8%BD%AC%E8%BD%B4)
-		1. [左轮](#%E5%B7%A6%E8%BD%AE)
-		2. [右轮](#%E5%8F%B3%E8%BD%AE)
-		3. [左右支持力](#%E5%B7%A6%E5%8F%B3%E6%94%AF%E6%8C%81%E5%8A%9B)
-	2. [腿转轴](#%E8%85%BF%E8%BD%AC%E8%BD%B4)
-		1. [左腿](#%E5%B7%A6%E8%85%BF)
-		2. [右腿](#%E5%8F%B3%E8%85%BF)
-	3. [机体转轴](#%E6%9C%BA%E4%BD%93%E8%BD%AC%E8%BD%B4)
-	4. [控制律](#%E6%8E%A7%E5%88%B6%E5%BE%8B)
-		1. [水平运动方程](#%E6%B0%B4%E5%B9%B3%E8%BF%90%E5%8A%A8%E6%96%B9%E7%A8%8B)
-		2. [yaw转动方程](#yaw%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-		3. [机体转动方程](#%E6%9C%BA%E4%BD%93%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-		4. [腿部转动方程](#%E8%85%BF%E9%83%A8%E8%BD%AC%E5%8A%A8%E6%96%B9%E7%A8%8B)
-	5. [标准动力学](#%E6%A0%87%E5%87%86%E5%8A%A8%E5%8A%9B%E5%AD%A6)
-		1. [平衡点计算](#%E5%B9%B3%E8%A1%A1%E7%82%B9%E8%AE%A1%E7%AE%97)
-
+# 物理建模与控制律
 
 物理建模的方式直接决定了控制器的设计和控制上限，对于建模而言，并不是一定是越精确越细致就越好，模型精确依赖数据精确，模型粗糙依赖更多处理，下面的物理建模按照从易到难，从简单到复杂，展现了三个发展阶段。
 
@@ -111,10 +72,10 @@ I_{w} \ddot{\theta}_{w}=\tau_{w}-fR_{w}
 加速度
 ```math
 a_{l}^{h}=a_{w}^{h}+\frac{ \partial ^2 }{ \partial t } (l_{w}\sin \theta_{l})
-=\ddot{x}+l_{w}\cos \theta_{l}\ddot{\theta_{l}}-l_{w}\sin \theta_{l}\dot{\theta}_{l}^{2}
+=\ddot{x}+l_{w}\cos \theta_{l}\ddot{\theta}_{l}-l_{w}\sin \theta_{l}\dot{\theta}_{l}^{2}
 ```
 ```math
-a_{l}^{v}=a_{w}^{v}+\frac{ \partial ^{2} }{ \partial t } (l_{w}\cos \theta_{l})=-l_{w}\sin \theta_{l}\ddot{\theta_{l}}-l_{w}\cos \theta_{l}\dot{\theta}_{l}^{2}
+a_{l}^{v}=a_{w}^{v}+\frac{ \partial ^{2} }{ \partial t } (l_{w}\cos \theta_{l})=-l_{w}\sin \theta_{l}\ddot{\theta}_{l}-l_{w}\cos \theta_{l}\dot{\theta}_{l}^{2}
 ```
 转动分析
 ```math
@@ -132,10 +93,10 @@ F_{l}^{v}-m_{b}g=m_{b}a_{b}^v
 ```
 加速度
 ```math
-a_{b}^{h}=a_{w}^{h}+\frac{ \partial ^2 }{ \partial t } (l\sin \theta_{l})=\ddot{x}+l\cos \theta_{l}\ddot{\theta_{l}}-l\sin \theta_{l}\dot{\theta}_{l}^{2}
+a_{b}^{h}=a_{w}^{h}+\frac{ \partial ^2 }{ \partial t } (l\sin \theta_{l})=\ddot{x}+l\cos \theta_{l}\ddot{\theta}_{l}-l\sin \theta_{l}\dot{\theta}_{l}^{2}
 ```
 ```math
-a_{b}^{v}=a_{w}^{v}+\frac{ \partial ^{2} }{ \partial t } (l\cos \theta_{l})=-l\sin \theta_{l}\ddot{\theta_{l}}-l\cos \theta_{l}\dot{\theta}_{l}^{2}
+a_{b}^{v}=a_{w}^{v}+\frac{ \partial ^{2} }{ \partial t } (l\cos \theta_{l})=-l\sin \theta_{l}\ddot{\theta}_{l}-l\cos \theta_{l}\dot{\theta}_{l}^{2}
 ```
 转动分析
 ```math
@@ -180,11 +141,11 @@ x \\
 #### 水平运动方程
 
 ```math
-\begin{align}
+\begin{aligned}
 f & =m_{w}a_{w}^{h}+m_{l}a_{l}^{h}+m_{b}a_{b}^{h} \\
- & =m_{w}\ddot{x}+m_{l}(\ddot{x}+l_{w}\cos \theta_{l}\ddot{\theta_{l}}-l_{w}\sin \theta_{l}\dot{\theta}_{l}^{2})+m_{b}(\ddot{x}+l\cos \theta_{l}\ddot{\theta_{l}}-l\sin \theta_{l}\dot{\theta}_{l}^{2}) \\
-  & =(m_{w}+m_{l}+m_{b})\ddot{x}+(m_{l}+m_{b})(l_{w}\cos \theta_{l}\ddot{\theta_{l}}-l_{w}\sin \theta_{l}\dot{\theta}_{l}^{2})+m_{b}(l_{b}\cos \theta_{l}\ddot{\theta}_{l}-l_{b}\sin \theta_{l}\dot{\theta}_{l}^2)
-\end{align}
+ & =m_{w}\ddot{x}+m_{l}(\ddot{x}+l_{w}\cos \theta_{l}\ddot{\theta}_{l}-l_{w}\sin \theta_{l}\dot{\theta}_{l}^{2})+m_{b}(\ddot{x}+l\cos \theta_{l}\ddot{\theta}_{l}-l\sin \theta_{l}\dot{\theta}_{l}^{2}) \\
+  & =(m_{w}+m_{l}+m_{b})\ddot{x}+(m_{l}+m_{b})(l_{w}\cos \theta_{l}\ddot{\theta}_{l}-l_{w}\sin \theta_{l}\dot{\theta}_{l}^{2})+m_{b}(l_{b}\cos \theta_{l}\ddot{\theta}_{l}-l_{b}\sin \theta_{l}\dot{\theta}_{l}^2)
+\end{aligned}
 ```
 代入
 ```math
@@ -192,7 +153,7 @@ f=\frac{\tau_{w}-I_{w}\ddot{\theta}_{w}}{R_{w}}=\frac{\tau_{w}}{R_{w}}-\frac{I_{
 ```
 得到
 ```math
-\left( m_{w}+m_{l}+m_{b}+\frac{I_{w}}{R_{w}^{2}} \right)\ddot{x}+(m_{l}+m_{b})(l_{w}\cos \theta_{l}\ddot{\theta_{l}}-l_{w}\sin \theta_{l}\dot{\theta}_{l}^{2})+m_{b}(l_{b}\cos \theta_{l}\ddot{\theta}_{l}-l_{b}\sin \theta_{l}\dot{\theta}_{l}^2)-\frac{\tau_{w}}{R_{w}}=0
+\left( m_{w}+m_{l}+m_{b}+\frac{I_{w}}{R_{w}^{2}} \right)\ddot{x}+(m_{l}+m_{b})(l_{w}\cos \theta_{l}\ddot{\theta}_{l}-l_{w}\sin \theta_{l}\dot{\theta}_{l}^{2})+m_{b}(l_{b}\cos \theta_{l}\ddot{\theta}_{l}-l_{b}\sin \theta_{l}\dot{\theta}_{l}^2)-\frac{\tau_{w}}{R_{w}}=0
 ```
 
 
@@ -205,11 +166,11 @@ f=\frac{\tau_{w}-I_{w}\ddot{\theta}_{w}}{R_{w}}=\frac{\tau_{w}}{R_{w}}-\frac{I_{
 #### 机体转动方程
 
 ```math
-\begin{align}
+\begin{aligned}
 I_{b} \ddot{\theta}_{b} & =-\tau_{l}+F_{l}^{v}d_{b}\sin \theta_{b}-F_{l}^{h}d_{b}\cos \theta_{b} \\
  & =-\tau_{l}+m_{b}(a_{l}^{v}+g)d_{b}\sin \theta_{b}-m_{b}a_{l}^{h}d_{b}\cos \theta_{b} \\
- & =-\tau_{l}+m_{b}(-l\sin \theta_{l}\ddot{\theta_{l}}-l\cos \theta_{l}\dot{\theta}_{l}^{2}+g)d_{b}\sin \theta_{b}-m_{b}(\ddot{x}+l\cos \theta_{l}\ddot{\theta_{l}}-l\sin \theta_{l}\dot{\theta}_{l}^{2})\cos \theta_{b}
-\end{align}
+ & =-\tau_{l}+m_{b}(-l\sin \theta_{l}\ddot{\theta}_{l}-l\cos \theta_{l}\dot{\theta}_{l}^{2}+g)d_{b}\sin \theta_{b}-m_{b}(\ddot{x}+l\cos \theta_{l}\ddot{\theta}_{l}-l\sin \theta_{l}\dot{\theta}_{l}^{2})\cos \theta_{b}
+\end{aligned}
 ```
 
 
@@ -222,34 +183,35 @@ I_{b}\ddot{\theta}_{b}=-\tau_{l}+m_{b}gd_{b}\theta_{b}-m_{b}\ddot{x}-m_{b}l\ddot
 #### 腿部转动方程
 
 ```math
-\begin{align}
+\begin{aligned}
 F_{w}^{v} & =F_{l}^{v}+m_{l}(a_{l}^v+g)=m_{b}(a_{b}^{v}+g)+m_{l}(a_{l}^{v}+g) \\
- & = m_{b}(-l\sin \theta_{l}\ddot{\theta_{l}}-l\cos \theta_{l}\dot{\theta}_{l}^{2}+g)+m_{l}(-l_{w}\sin \theta_{l}\ddot{\theta_{l}}-l_{w}\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
- & =(m_{b}+m_{l})(-l_{w}\sin \theta_{l}\ddot{\theta_{l}}-l_{w}\cos \theta_{l}\dot{\theta}_{l}^{2}+g)+m_{b}(-l_{b}\sin \theta_{l}\ddot{\theta_{l}}-l_{b}\cos \theta_{l}\dot{\theta}_{l}^{2})
-\end{align}
+ & = m_{b}(-l\sin \theta_{l}\ddot{\theta}_{l}-l\cos \theta_{l}\dot{\theta}_{l}^{2}+g)+m_{l}(-l_{w}\sin \theta_{l}\ddot{\theta}_{l}-l_{w}\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
+ & =(m_{b}+m_{l})(-l_{w}\sin \theta_{l}\ddot{\theta}_{l}-l_{w}\cos \theta_{l}\dot{\theta}_{l}^{2}+g)+m_{b}(-l_{b}\sin \theta_{l}\ddot{\theta}_{l}-l_{b}\cos \theta_{l}\dot{\theta}_{l}^{2})
+\end{aligned}
 ```
 ```math
 F_{w}^{h}=f-m_{w}a_{w}^{h}= \frac{\tau_{w}-I_{w} \ddot{\theta}_{w}}{R_{w}}-m_{w}\ddot{x}
 ```
 得到
 ```math
-\begin{align}
+\begin{aligned}
 I_{l} \ddot{\theta}_{l} & =\tau_{l}-\tau_{w} \\
- & +l_{w}\cos \theta_{l}((m_{b}+m_{l})(-l_{w}\sin \theta_{l}\ddot{\theta_{l}}-l_{w}\cos \theta_{l}\dot{\theta}_{l}^{2}+g)+m_{b}(-l_{b}\sin \theta_{l}\ddot{\theta_{l}}-l_{b}\cos \theta_{l}\dot{\theta}_{l}^{2}+g)) \\
- & +m_{b}l_{b}\sin \theta_{l}(-l\sin \theta_{l}\ddot{\theta_{l}}-l\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
+ & +l_{w}\cos \theta_{l}\Big( (m_{b}+m_{l})(-l_{w}\sin \theta_{l}\ddot{\theta}_{l}-l_{w}\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
+ & \quad +m_{b}(-l_{b}\sin \theta_{l}\ddot{\theta}_{l}-l_{b}\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \Big) \\
+ & +m_{b}l_{b}\sin \theta_{l}(-l\sin \theta_{l}\ddot{\theta}_{l}-l\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
  & -l_{w}\cos \theta_{l}(\frac{\tau_{w}-I_{w} \ddot{\theta}_{w}}{R_{w}}-m_{w}\ddot{x}) \\
- & -m_{b}l_{w}\cos \theta_{l}(\ddot{x}+l\cos \theta_{l}\ddot{\theta_{l}}-l\sin \theta_{l}\dot{\theta}_{l}^{2})
-\end{align}
+ & -m_{b}l_{w}\cos \theta_{l}(\ddot{x}+l\cos \theta_{l}\ddot{\theta}_{l}-l\sin \theta_{l}\dot{\theta}_{l}^{2})
+\end{aligned}
 ```
 
 
 小角度线性化：
 
 ```math
-\begin{align}
+\begin{aligned}
 (I_{l}+m_{b}l\,l_{w})\ddot{\theta}_{l} & =\tau_{l}-\tau_{w}\Big(1+\frac{l_{w}}{R_{w}}\Big)+(m_{w}-m_{b})l_{w}\ddot{x}-m_{b}gl_{b}\theta_{l} \\
  & +gl_{w}(2m_{b}+m_{l})
-\end{align}
+\end{aligned}
 ```
 
 其中 $`gl_{w}(2m_{b}+m_{l})`$ 为平衡常数项，在平衡点处由关节力矩平衡；整理 $`\dot{x}=Ax+Bu`$ 时消去即可。
@@ -357,17 +319,16 @@ F_{l,l}^{v}+F_{l,r}^{v}-m_{b}g=m_{b}a_{b}^{v}
 加速度
 
 ```math
-
-\begin{align}
+\begin{aligned}
 a_{b}^{h} & =a_{w}^{h}+\frac{ \partial ^2 }{ \partial t } \frac{1}{2}(l_{l}\sin \theta_{l,l}+l_{r}\sin \theta_{l,r}) \\
  & =\ddot{x}+\frac{1}{2}l_{l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-\frac{1}{2}l_{l}\sin \theta_{l,l}\dot{\theta}_{l,l}^{2}+\frac{1}{2}l_{r}\cos \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\sin \theta_{l,r}\dot{\theta}_{l,r}^{2}
-\end{align}
+\end{aligned}
 ```
 ```math
-\begin{align}
+\begin{aligned}
 a_{b}^{v} & =a_{w}^{v}+\frac{ \partial ^{2} }{ \partial t } \frac{1}{2}(l_{l} \cos \theta_{l,l}+l_{r}\cos \theta_{l,r}) \\
  & =-\frac{1}{2}l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-\frac{1}{2}l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}
-\end{align}
+\end{aligned}
 ```
 转动分析
 ```math
@@ -429,11 +390,11 @@ f  =m_{w,l}a_{w,l}^{h}+m_{w,r}a_{w,r}^{h}+m_{l,l}a_{l,l}^{h}+m_{l,r}a_{l,r}^{h}+
 ```
 代入 $`f`$
 ```math
-\begin{align}
+\begin{aligned}
 \frac{\tau_{w,l}+\tau_{w,r}}{R_{w}} = &  \left( 2m_{w}+2m_{l}+m_{b}+\frac{2I_{w}}{R_{w}^{2}} \right)\ddot{x}\\
  & +\left( m_{l}+\frac{m_{b}}{2} \right)(l_{w,l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-l_{w,l}\sin \theta_{l,l}\dot{\theta}_{l,l}^{2}+l_{w,r}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{w,r}\sin \theta_{l,r}\dot{\theta}_{l,r}^{2}) \\
  & +\frac{m_{b}}{2}(l_{b,l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-l_{b,l}\sin \theta_{l,l}\dot{\theta}_{l,l}^2+l_{b,r}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{b,r}\sin \theta_{l,r}\dot{\theta}_{l,r}^2)
-\end{align}
+\end{aligned}
 ```
 
 
@@ -446,9 +407,7 @@ f  =m_{w,l}a_{w,l}^{h}+m_{w,r}a_{w,r}^{h}+m_{l,l}a_{l,l}^{h}+m_{l,r}a_{l,r}^{h}+
 #### yaw转动方程
 
 ```math
-
 I_{\phi}\ddot{\phi}=\frac{R_{b}}{R_{w}}\Big[(\tau_{w,r}-I\ddot{\theta}_{w,r})-(\tau_{w,l}-I\ddot{\theta}_{w,l})\Big]
-
 ```
 
 
@@ -460,11 +419,11 @@ I_{\phi}\ddot{\phi}=\frac{R_{b}}{R_{w}}\big(\tau_{w,r}-\tau_{w,l}\big)
 #### 机体转动方程
 
 ```math
-\begin{align}
+\begin{aligned}
 I_{b} \ddot{\theta}_{b} = & -(\tau_{l,l}+\tau_{l,r})+m_{b}gd_{b}\sin \theta_{b}-m_{b}\ddot{x}\cos \theta_{b} \\
  & +\frac{m_{b}}{2}(-l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}-l_{r}\sin \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2})d_{b}\sin \theta_{b} \\
  & -\frac{m_{b}}{2}(l_{l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\sin \theta_{l,l}\dot{\theta}_{l,l}^{2}+l_{r}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\sin \theta_{l,r}\dot{\theta}_{l,r}^{2})\cos \theta_{b}
-\end{align}
+\end{aligned}
 ```
 
 
@@ -476,52 +435,52 @@ I_{b}\ddot{\theta}_{b}=-(\tau_{l,l}+\tau_{l,r})+m_{b}gd_{b}\theta_{b}-m_{b}\ddot
 #### 腿部转动方程
 
 ```math
-\begin{align}
+\begin{aligned}
 F_{w,l}^{v} & =F_{l,l}^{v}+m_{l}(a_{l,l}^v+g)=m_{b}(a_{b}^{v}+g)+m_{l}(a_{l,l}^{v}+g) \\
  & = \frac{1}{2}m_{b}\left( -\frac{1}{2}l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-\frac{1}{2}l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}+g \right)+m_{l}(-l_{w,l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{w,l}\cos \theta_{l}\dot{\theta}_{l}^{2}+g)
-\end{align}
+\end{aligned}
 ```
 
 ```math
-\begin{align}
+\begin{aligned}
 I_{l,l} \ddot{\theta}_{l,l} = & \tau_{l,l}-\tau_{w,l} \\
  & +\frac{1}{2}m_{b}l_{w,l}\sin \theta_{l,l}(-\frac{1}{2}l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-\frac{1}{2}l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}+g) \\
  & + \frac{1}{2}m_{l}l_{w,l}\sin \theta_{l,l}(-l_{w,l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{w,l}\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
  & + \frac{1}{2}m_{b}l_{b,l}\sin \theta_{l,l}(-\frac{1}{2}l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-\frac{1}{2}l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}+g) \\
  & -l_{w,l}\cos \theta_{l,l}(\frac{\tau_{w,l}-I_{w} \ddot{\theta}_{w,l}}{R_{w}}-m_{w}\ddot{x}) \\
  & -m_{b}l_{b,l}\cos \theta_{l,l}(\ddot{x}+l_{l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\sin \theta_{l,l}\dot{\theta}_{l,l}^{2})
-\end{align}
+\end{aligned}
 ```
 
 
 小角度线性化（左腿）：
 
 ```math
-\begin{align}
+\begin{aligned}
 (I_{l,l}+m_{b}l_{l}l_{b,l})\ddot{\theta}_{l,l} & =\tau_{l,l}-\tau_{w,l}\Big(1+\frac{l_{w,l}}{R_{w}}\Big)+(m_{w}-m_{b})l_{w,l}\ddot{x} \\
  & +\frac{m_{b}g}{2}\big(l_{b,l}+l_{w,l}\big)\theta_{l,l}+\frac{m_{l}g}{2}l_{w,l}\theta_{l,l}
-\end{align}
+\end{aligned}
 ```
 
 ```math
-\begin{align}
+\begin{aligned}
 I_{l,r} \ddot{\theta}_{l,r} = & \tau_{l,r}-\tau_{w,r} \\
- & +\frac{1}{2}m_{b}l_{w,r}\sin \theta_{l,r}(-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{l}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}+g) \\
- & + \frac{1}{2}m_{l}l_{w,r}\sin \theta_{l,r}(-l_{w,r}\sin \theta_{l,r}\ddot{\theta}_{l,r}-l_{w,r}\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
- & + \frac{1}{2}m_{b}l_{b,r}\sin \theta_{l,r}(-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{l}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}+g) \\
- & -l_{w,r}\cos \theta_{l,r}(\frac{\tau_{w,r}-I_{w} \ddot{\theta}_{w,r}}{R_{w}}-m_{w}\ddot{x}) \\
- & -m_{b}l_{b,r}\cos \theta_{l,r}(\ddot{x}+l_{l}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{l}\sin \theta_{l,r}\dot{\theta}_{l,r}^{2})
-\end{align}
+ & +\frac{1}{2}m_{b}l_{w,r}\sin \theta_{l,r}(-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{l}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}+g) \\
+ & + \frac{1}{2}m_{l}l_{w,r}\sin \theta_{l,r}(-l_{w,r}\sin \theta_{l,r}\ddot{\theta}_{l,r}-l_{w,r}\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
+ & + \frac{1}{2}m_{b}l_{b,r}\sin \theta_{l,r}(-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{l}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}-\frac{1}{2}l_{l}\sin \theta_{l,r}\ddot{\theta}_{l,r}-\frac{1}{2}l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}+g) \\
+ & -l_{w,r}\cos \theta_{l,r}(\frac{\tau_{w,r}-I_{w} \ddot{\theta}_{w,r}}{R_{w}}-m_{w}\ddot{x}) \\
+ & -m_{b}l_{b,r}\cos \theta_{l,r}(\ddot{x}+l_{l}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{l}\sin \theta_{l,r}\dot{\theta}_{l,r}^{2})
+\end{aligned}
 ```
 
 
 小角度线性化（右腿）：
 
 ```math
-\begin{align}
+\begin{aligned}
 (I_{l,r}+m_{b}l_{l}l_{b,r})\ddot{\theta}_{l,r} & =\tau_{l,r}-\tau_{w,r}\Big(1+\frac{l_{w,r}}{R_{w}}\Big)+(m_{w}-m_{b})l_{w,r}\ddot{x} \\
  & +\frac{m_{b}g}{2}\big(l_{b,r}+l_{w,r}\big)\theta_{l,r}+\frac{m_{l}g}{2}l_{w,r}\theta_{l,r}
-\end{align}
+\end{aligned}
 ```
 ## 双腿质心偏移建模
 
@@ -592,7 +551,7 @@ F_{N,l}=F_{N,r}\implies F_{w,l}^{v}=F_{w,r}^{v}
 a_{l,l}^{h}=a_{w,l}^{h}+\frac{ \partial ^{2} }{ \partial t } (l_{l}\sin \theta_{l,l})=\ddot{x}+l_{l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\sin \theta_{l,l}\dot{\theta}_{l,l}^{2}
 ```
 ```math
-a_{l,l}^{v}=a_{w,l}^{v}+\frac{ \partial ^{2} }{ \partial t } (l_{l}\cos \theta_{l,l})=-l_{l}\sin \theta_{l,l}\ddot{\theta_{l,l}}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}
+a_{l,l}^{v}=a_{w,l}^{v}+\frac{ \partial ^{2} }{ \partial t } (l_{l}\cos \theta_{l,l})=-l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}
 ```
 
 转动分析
@@ -613,7 +572,7 @@ I_{l,l}\ddot{\theta}_{l,l}=\tau_{l,l}-\tau_{w,l}-m_{l}gd_{l}\sin(\theta_{l,l}+\t
 a_{l,r}^{h}=a_{w,r}^{h}+\frac{ \partial ^{2} }{ \partial t } (l_{r}\sin \theta_{l,r})=\ddot{x}+l_{r}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\sin \theta_{l,r}\dot{\theta}_{l,r}^{2}
 ```
 ```math
-a_{l,r}^{v}=a_{w,r}^{v}+\frac{ \partial ^{2} }{ \partial t } (l_{r}\cos \theta_{l,r})=-l_{r}\sin \theta_{l,r}\ddot{\theta_{l,r}}-l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}
+a_{l,r}^{v}=a_{w,r}^{v}+\frac{ \partial ^{2} }{ \partial t } (l_{r}\cos \theta_{l,r})=-l_{r}\sin \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2}
 ```
 转动分析
 ```math
@@ -691,22 +650,21 @@ x \\
 
 #### 水平运动方程
 ```math
-\begin{align}
+\begin{aligned}
 f  &  = m_{w}a_{w,l}^{h}+m_{w}a_{w,r}^{h}+m_{l}a_{l}^{h}+m_{l}a_{l,r}^{h}+m_{b}a_{b}^{h}  \\
  & = m_{w}\ddot{x}+m_{w}\ddot{x}+m_{l}a_{l,l}^{h}+m_{l}a_{l,r}^{h}+m_{b} \frac{a_{l,l}^{h}+a_{l,r}^{h}}{2} \\
  & = (2m_{w}+2m_{l}+m_{b})\ddot{x} \\
   & +\frac{1}{2}(2m_{l}+m_{b})(l_{l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\sin \theta_{l,l}\dot{\theta}_{l,l}^{2}) \\
    & + \frac{1}{2}(2m_{l}+m_{b})(l_{r}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\sin \theta_{l}\dot{\theta}_{l,r}^{2})
-\end{align}
+\end{aligned}
 ```
 代入 $`f`$
 ```math
-
-\begin{align}
+\begin{aligned}
 \frac{\tau_{w,l}+\tau_{w,r}}{R_{w}}  =& \left( 2m_{w}+2m_{l}+m_{b}+\frac{2I_{w}}{R_{w}^{2}} \right)\ddot{x} \\
   & +\frac{1}{2}(2m_{l}+m_{b})(l_{l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\sin \theta_{l,l}\dot{\theta}_{l,l}^{2}) \\
    & + \frac{1}{2}(2m_{l}+m_{b})(l_{r}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\sin \theta_{l}\dot{\theta}_{l,r}^{2})
-\end{align}
+\end{aligned}
 ```
 #### yaw转动方程
 
@@ -716,37 +674,37 @@ I_{\phi}\ddot{\phi}=\frac{R_{b}}{R_{w}}\Big[(\tau_{w,r}-I\ddot{\theta}_{w,r})-(\
 #### 机体转动方程
 
 ```math
-\begin{align}
+\begin{aligned}
 I_{b} \ddot{\theta}_{b} = & -(\tau_{l,l}+\tau_{l,r})-m_{b}gd_{b}\cos(\theta_{b}+\theta_{b}^{0})+m_{b}gd_{b}\sin \theta_{b}-m_{b}\ddot{x}\cos \theta_{b} \\
  & +\frac{m_{b}}{2}(-l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}-l_{r}\sin \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2})d_{b}\sin \theta_{b} \\
  & -\frac{m_{b}}{2}(l_{l}\cos \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\sin \theta_{l,l}\dot{\theta}_{l,l}^{2}+l_{r}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\sin \theta_{l,r}\dot{\theta}_{l,r}^{2})\cos \theta_{b}
-\end{align}
+\end{aligned}
 ```
 
 #### 腿部转动方程
 
 ```math
-\begin{align}
+\begin{aligned}
 F_{w,l}^{v} & =F_{l,l}^{v}+m_{l}(a_{l,l}^{v}+g)=m_{b}(a_{b}^{v}+g)+m_{l}(a_{l,l}^{v}+g) = \frac{1}{2}(m_{b}+2m_{l})a_{l,l}^{v}+\frac{1}{2}m_{b}a_{l,r}^{v} \\
- & =\frac{1}{2}(m_{b}+2m_{l})(-l_{l}\sin \theta_{l,l}\ddot{\theta_{l,l}}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2})+\frac{1}{2}m_{b}(-l_{r}\sin \theta_{l,r}\ddot{\theta_{l,r}}-l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2})
-\end{align}
+ & =\frac{1}{2}(m_{b}+2m_{l})(-l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2})+\frac{1}{2}m_{b}(-l_{r}\sin \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2})
+\end{aligned}
 ```
 ```math
-\begin{align}
+\begin{aligned}
 I_{l,l}\ddot{\theta}_{l,l}= & \tau_{l,l}-\tau_{w,l}-m_{l}gd_{l}\sin(\theta_{l,l}+\theta_{l,l}^{0}) \\
- & -l_{w,l}\cos \theta_{l,l}(\frac{\tau_{w,l}-I_{w} \ddot{\theta}_{w,l}}{R_{w}}-m_{w}\ddot{x}) \\
- & +\frac{1}{2}(m_{b}+2m_{l})l_{r}\sin \theta_{l,l}(-l_{l}\sin \theta_{l,l}\ddot{\theta_{l,l}}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}) \\
-& +\frac{1}{2}m_{b}l_{r}\sin \theta_{l,l}(-l_{r}\sin \theta_{l,l}\ddot{\theta_{l,l}}-l_{r}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2})
-\end{align}
+ & -l_{w,l}\cos \theta_{l,l}(\frac{\tau_{w,l}-I_{w} \ddot{\theta}_{w,l}}{R_{w}}-m_{w}\ddot{x}) \\
+ & +\frac{1}{2}(m_{b}+2m_{l})l_{r}\sin \theta_{l,l}(-l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}) \\
+& +\frac{1}{2}m_{b}l_{r}\sin \theta_{l,l}(-l_{r}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{r}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2})
+\end{aligned}
 ```
 
 ```math
-\begin{align}
+\begin{aligned}
 I_{l,r}\ddot{\theta}_{l,r}= & \tau_{l,r}-\tau_{w,r}-m_{l}gd_{l}\sin(\theta_{l,r}+\theta_{l,r}^{0}) \\
  & -l_{w,r}\cos \theta_{l,r}(\frac{\tau_{w,r}-I_{w} \ddot{\theta}_{w,r}}{R_{w}}-m_{w}\ddot{x}) \\
- & +\frac{1}{2}(m_{b}+2m_{l})l_{r}\sin \theta_{l,r}(-l_{l}\sin \theta_{l,l}\ddot{\theta_{l,l}}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}) \\
-& +\frac{1}{2}m_{b}l_{r}\sin \theta_{l,r}(-l_{r}\sin \theta_{l,r}\ddot{\theta_{l,r}}-l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2})
-\end{align}
+ & +\frac{1}{2}(m_{b}+2m_{l})l_{r}\sin \theta_{l,r}(-l_{l}\sin \theta_{l,l}\ddot{\theta}_{l,l}-l_{l}\cos \theta_{l,l}\dot{\theta}_{l,l}^{2}) \\
+& +\frac{1}{2}m_{b}l_{r}\sin \theta_{l,r}(-l_{r}\sin \theta_{l,r}\ddot{\theta}_{l,r}-l_{r}\cos \theta_{l,r}\dot{\theta}_{l,r}^{2})
+\end{aligned}
 ```
 ### 标准动力学
 
