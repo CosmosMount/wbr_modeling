@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrix Coefficient Comparison (LaTeX Style)</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    
+    <style>
+        :root {
+            --latex-font: "Latin Modern Roman", "Times New Roman", serif;
+            --border-color: #e2e2e2;
+        }
+        body {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            font-family: var(--latex-font);
+            line-height: 1.7;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 30px;
+        }
+        h2 { text-align: center; font-weight: normal; font-variant: small-caps; letter-spacing: 1px; margin-bottom: 40px;}
+        
+        .card {
+            background: white;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .formula-box {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+            background: #fafafa;
+            border-radius: 4px;
+        }
+
+        .global-params {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 20px 0 30px 0;
+            padding: 20px;
+            background: #fdfdfd;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .input-group { display: flex; align-items: center; gap: 10px; font-size: 1.1em; }
+        input[type="number"] {
+            width: 80px;
+            padding: 6px 10px;
+            border: 1px solid #aaa;
+            font-family: var(--latex-font);
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .comparison-panels {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .panel {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            background: #fafafa;
+            border-radius: 4px;
+        }
+
+        .panel-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            font-family: "Fira Code", "Courier New", monospace;
+            padding: 15px;
+            border: 1px solid #ccc;
+            background: #ffffff;
+            font-size: 12px;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            margin: 30px auto 10px auto;
+            padding: 12px 40px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-family: var(--latex-font);
+            font-size: 16px;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+        button:hover { background: #444; }
+
+        /* 三线表样式 */
+        .table-wrapper { overflow-x: auto; margin: 25px 0 40px 0; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13.5px;
+        }
+        th, td {
+            padding: 10px 4px;
+            text-align: center;
+        }
+        thead tr:first-child th { border-top: 2px solid #000; border-bottom: 1px solid #000; }
+        tbody tr:last-child td { border-bottom: 2px solid #000; }
+        th { font-weight: normal; }
+
+        .code-title { 
+            font-size: 0.95em; 
+            margin-top: 20px; 
+            border-left: 3px solid #444; 
+            padding-left: 10px;
+            font-style: italic;
+        }
+        .code-output {
+            background: #f4f6f8;
+            padding: 15px;
+            font-family: "Fira Code", "Courier New", monospace;
+            font-size: 12px;
+            white-space: pre;
+            border: 1px solid #e0e0e0;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 id="main-title"></h2>
+
+    <div class="card">
+        <div class="formula-box" id="eq-main"></div>
+
+        <div class="global-params">
+            <div class="input-group">
+                <span id="lab-llen"></span>
+                <input type="number" id="llen" value="0.17" step="0.01" min="0.15" max="0.31">
+            </div>
+            <div class="input-group">
+                <span id="lab-rlen"></span>
+                <input type="number" id="rlen" value="0.17" step="0.01" min="0.15" max="0.31">
+            </div>
+        </div>
+
+        <div class="comparison-panels">
+            <div class="panel">
+                <div class="panel-title" id="title-setA"></div>
+                <textarea id="inputDataA" placeholder="Paste Coefficient Set A here... { a1, a2, a3, a4, a5, a6 },"></textarea>
+            </div>
+            
+            <div class="panel">
+                <div class="panel-title" id="title-setB"></div>
+                <textarea id="inputDataB" placeholder="Paste Coefficient Set B here... { a1, a2, a3, a4, a5, a6 },"></textarea>
+            </div>
+        </div>
+        
+        <button onclick="calculate()">Compute & Compare Matrices</button>
+    </div>
+
+    <div id="resultSection" style="display:none;">
+        <div class="card">
+            <div id="res-title-A" style="text-align: center; margin-bottom: 15px;"></div>
+            <div class="table-wrapper" id="tableContainer-A"></div>
+            
+            <div id="res-title-B" style="text-align: center; margin-top: 50px; margin-bottom: 15px;"></div>
+            <div class="table-wrapper" id="tableContainer-B"></div>
+            
+            <div class="code-title">C++ Header Format Output:</div>
+            <div class="code-output" id="rawOutput"></div>
+        </div>
+    </div>
+
+    <script>
+        const render = (id, tex, display = false) => {
+            katex.render(tex, document.getElementById(id), {
+                throwOnError: false,
+                displayMode: display
+            });
+        };
+
+        window.onload = function() {
+            render("main-title", "\\text{Controller Coefficient Comparison Matrix}", false);
+            render("eq-main", "K(L_{len}, R_{len}) = a_1 + a_2 L_{len} + a_3 R_{len} + a_4 L_{len}^2 + a_5 L_{len}R_{len} + a_6 R_{len}^2", true);
+            
+            render("lab-llen", "L_{len}:", false);
+            render("lab-rlen", "R_{len}:", false);
+            
+            render("title-setA", "\\text{Coefficient Array } \\mathbf{A}", false);
+            render("title-setB", "\\text{Coefficient Array } \\mathbf{B}", false);
+        };
+
+        function parseCoefficients(rawText) {
+            const regex = /\{([^}]+)\}/g;
+            let match, coeffs = [];
+            while ((match = regex.exec(rawText)) !== null) {
+                const nums = match[1].split(',').map(n => parseFloat(n.trim()));
+                if (nums.length === 6 && !nums.some(isNaN)) {
+                    coeffs.push(nums);
+                }
+            }
+            return coeffs;
+        }
+
+        function calculate() {
+            // Get single set of L and R
+            const L = parseFloat(document.getElementById('llen').value);
+            const R = parseFloat(document.getElementById('rlen').value);
+            
+            // Parse both text areas
+            const textA = document.getElementById('inputDataA').value;
+            const textB = document.getElementById('inputDataB').value;
+            
+            const coeffsA = parseCoefficients(textA);
+            const coeffsB = parseCoefficients(textB);
+
+            // Validation
+            if (coeffsA.length !== 40 && textA.trim() !== "") {
+                alert(`Error in Set A: Found ${coeffsA.length} valid arrays. Expected 40.`); return;
+            }
+            if (coeffsB.length !== 40 && textB.trim() !== "") {
+                alert(`Error in Set B: Found ${coeffsB.length} valid arrays. Expected 40.`); return;
+            }
+            if (coeffsA.length !== 40 && coeffsB.length !== 40) {
+                alert("Please paste at least one valid 40-element coefficient set."); return;
+            }
+
+            // Compute Math
+            const computeMat = (coeffs, L_val, R_val) => {
+                if(coeffs.length !== 40) return null;
+                const flat = coeffs.map(c => c[0] + c[1]*L_val + c[2]*R_val + c[3]*L_val*L_val + c[4]*L_val*R_val + c[5]*R_val*R_val);
+                const mat = [];
+                for (let i = 0; i < 4; i++) mat.push(flat.slice(i * 10, (i + 1) * 10));
+                return mat;
+            };
+
+            const matA = computeMat(coeffsA, L, R);
+            const matB = computeMat(coeffsB, L, R);
+
+            // Render Results based on available data
+            if (matA) {
+                render("res-title-A", `\\text{Resulting Matrix } \\mathbf{K}_A \\in \\mathbb{R}^{4 \\times 10} \\quad (L_{len}=${L}, R_{len}=${R})`, true);
+                renderTable(matA, 'A');
+                document.getElementById('res-title-A').style.display = 'block';
+                document.getElementById('tableContainer-A').style.display = 'block';
+            } else {
+                document.getElementById('res-title-A').style.display = 'none';
+                document.getElementById('tableContainer-A').style.display = 'none';
+            }
+
+            if (matB) {
+                render("res-title-B", `\\text{Resulting Matrix } \\mathbf{K}_B \\in \\mathbb{R}^{4 \\times 10} \\quad (L_{len}=${L}, R_{len}=${R})`, true);
+                renderTable(matB, 'B');
+                document.getElementById('res-title-B').style.display = 'block';
+                document.getElementById('tableContainer-B').style.display = 'block';
+            } else {
+                document.getElementById('res-title-B').style.display = 'none';
+                document.getElementById('tableContainer-B').style.display = 'none';
+            }
+
+            document.getElementById('rawOutput').innerText = generateCppCode(matA, matB);
+            document.getElementById('resultSection').style.display = 'block';
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderTable(mat, suffix) {
+            const headers = ["x", "\\dot{x}", "\\phi", "\\dot{\\phi}", "\\theta_{ll}", "\\dot{\\theta}_{ll}", "\\theta_{lr}", "\\dot{\\theta}_{lr}", "\\theta_{b}", "\\dot{\\theta}_{b}"];
+            const rows = ["T_{wl}", "T_{wr}", "T_{bl}", "T_{br}"];
+            
+            let html = `<table><thead><tr><th></th>`;
+            headers.forEach((h, i) => html += `<th id="th-${suffix}-${i}"></th>`);
+            html += "</tr></thead><tbody>";
+
+            mat.forEach((row, i) => {
+                html += `<tr><td style="font-weight:bold" id="tr-${suffix}-${i}"></td>`;
+                row.forEach(val => html += `<td>${val.toFixed(5)}</td>`);
+                html += "</tr>";
+            });
+            html += "</tbody></table>";
+            document.getElementById(`tableContainer-${suffix}`).innerHTML = html;
+
+            headers.forEach((h, i) => render(`th-${suffix}-${i}`, h));
+            rows.forEach((r, i) => render(`tr-${suffix}-${i}`, r));
+        }
+
+        function generateCppCode(matA, matB) {
+            let code = "";
+            if (matA) {
+                code += "// Generated using Coefficient Set A\n";
+                code += "const double K_matrix_A[4][10] = {\n";
+                matA.forEach((row, i) => {
+                    code += "    {" + row.map(v => v.toFixed(6).padStart(10, ' ')).join(", ") + "}" + (i < 3 ? ",\n" : "\n");
+                });
+                code += "};\n\n";
+            }
+            if (matB) {
+                code += "// Generated using Coefficient Set B\n";
+                code += "const double K_matrix_B[4][10] = {\n";
+                matB.forEach((row, i) => {
+                    code += "    {" + row.map(v => v.toFixed(6).padStart(10, ' ')).join(", ") + "}" + (i < 3 ? ",\n" : "\n");
+                });
+                code += "};";
+            }
+            return code;
+        }
+    </script>
+</body>
+</html>
