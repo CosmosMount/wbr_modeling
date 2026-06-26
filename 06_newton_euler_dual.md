@@ -180,24 +180,12 @@ f  =m_{w,l}a_{w,l}^{h}+m_{w,r}a_{w,r}^{h}+m_{l,l}a_{l,l}^{h}+m_{l,r}a_{l,r}^{h}+
 ```
 
 
-小角度线性化：
-
-```math
-\frac{\tau_{w,l}+\tau_{w,r}}{R_{w}}=\left(2m_{w}+2m_{l}+m_{b}+\frac{2I_{w}}{R_{w}^{2}}\right)\ddot{x}+\left(m_{l}+\frac{m_{b}}{2}\right)\big(l_{w,l}\ddot{\theta}_{l,l}+l_{w,r}\ddot{\theta}_{l,r}\big)+\frac{m_{b}}{2}\big(l_{b,l}\ddot{\theta}_{l,l}+l_{b,r}\ddot{\theta}_{l,r}\big)
-```
-
 #### yaw转动方程
 
 ```math
 I_{\phi}\ddot{\phi}=\frac{R_{b}}{R_{w}}\Big[(\tau_{w,r}-I\ddot{\theta}_{w,r})-(\tau_{w,l}-I\ddot{\theta}_{w,l})\Big]
 ```
 
-
-小角度线性化（滚动约束 $`\ddot{\theta}_{w}=\ddot{x}/R_{w}`$ ，$`I\ddot{\theta}_{w}`$ 项相消）：
-
-```math
-I_{\phi}\ddot{\phi}=\frac{R_{b}}{R_{w}}\big(\tau_{w,r}-\tau_{w,l}\big)
-```
 #### 机体转动方程
 
 ```math
@@ -208,12 +196,6 @@ I_{b} \ddot{\theta}_{b} = & -(\tau_{l,l}+\tau_{l,r})+m_{b}gd_{b}\sin \theta_{b}-
 \end{aligned}
 ```
 
-
-小角度线性化：
-
-```math
-I_{b}\ddot{\theta}_{b}=-(\tau_{l,l}+\tau_{l,r})+m_{b}gd_{b}\theta_{b}-m_{b}\ddot{x}-\frac{m_{b}}{2}\big(l_{l}\ddot{\theta}_{l,l}+l_{r}\ddot{\theta}_{l,r}\big)
-```
 #### 腿部转动方程
 
 ```math
@@ -233,16 +215,6 @@ I_{l,l} \ddot{\theta}_{l,l} = & \tau_{l,l}-\tau_{w,l} \\
 \end{aligned}
 ```
 
-
-小角度线性化（左腿）：
-
-```math
-\begin{aligned}
-(I_{l,l}+m_{b}l_{l}l_{b,l})\ddot{\theta}_{l,l} & =\tau_{l,l}-\tau_{w,l}\Big(1+\frac{l_{w,l}}{R_{w}}\Big)+(m_{w}-m_{b})l_{w,l}\ddot{x} \\
- & +\frac{m_{b}g}{2}\big(l_{b,l}+l_{w,l}\big)\theta_{l,l}+\frac{m_{l}g}{2}l_{w,l}\theta_{l,l}
-\end{aligned}
-```
-
 ```math
 \begin{aligned}
 I_{l,r} \ddot{\theta}_{l,r} = & \tau_{l,r}-\tau_{w,r} \\
@@ -250,15 +222,5 @@ I_{l,r} \ddot{\theta}_{l,r} = & \tau_{l,r}-\tau_{w,r} \\
  & + \frac{1}{2}m_{l}l_{w,r}\sin \theta_{l,r}(-l_{w,r}\sin \theta_{l,r}\ddot{\theta}_{l,r}-l_{w,r}\cos \theta_{l}\dot{\theta}_{l}^{2}+g) \\
  & -l_{w,r}\cos \theta_{l,r}(\frac{\tau_{w,r}-I_{w} \ddot{\theta}_{w,r}}{R_{w}}-m_{w}\ddot{x}) \\
  & -m_{b}l_{b,r}\cos \theta_{l,r}(\ddot{x}+l_{l}\cos \theta_{l,r}\ddot{\theta}_{l,r}-l_{l}\sin \theta_{l,r}\dot{\theta}_{l,r}^{2})
-\end{aligned}
-```
-
-
-小角度线性化（右腿）：
-
-```math
-\begin{aligned}
-(I_{l,r}+m_{b}l_{l}l_{b,r})\ddot{\theta}_{l,r} & =\tau_{l,r}-\tau_{w,r}\Big(1+\frac{l_{w,r}}{R_{w}}\Big)+(m_{w}-m_{b})l_{w,r}\ddot{x} \\
- & +\frac{m_{b}g}{2}\big(l_{b,r}+l_{w,r}\big)\theta_{l,r}+\frac{m_{l}g}{2}l_{w,r}\theta_{l,r}
 \end{aligned}
 ```

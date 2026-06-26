@@ -157,12 +157,6 @@ f=\frac{\tau_{w}-I_{w}\ddot{\theta}_{w}}{R_{w}}=\frac{\tau_{w}}{R_{w}}-\frac{I_{
 ```
 
 
-小角度线性化（$`\sin\theta\approx\theta`$ ，$`\cos\theta\approx 1`$ ，忽略 $`\dot{\theta}^{2}`$ 项）：
-
-```math
-\left( m_{w}+m_{l}+m_{b}+\frac{I_{w}}{R_{w}^{2}} \right)\ddot{x}+\big((m_{l}+m_{b})l_{w}+m_{b}l_{b}\big)\ddot{\theta}_{l}-\frac{\tau_{w}}{R_{w}}=0
-```
-
 #### 机体转动方程
 
 ```math
@@ -173,12 +167,6 @@ I_{b} \ddot{\theta}_{b} & =-\tau_{l}+F_{l}^{v}d_{b}\sin \theta_{b}-F_{l}^{h}d_{b
 \end{aligned}
 ```
 
-
-小角度线性化：
-
-```math
-I_{b}\ddot{\theta}_{b}=-\tau_{l}+m_{b}gd_{b}\theta_{b}-m_{b}\ddot{x}-m_{b}l\ddot{\theta}_{l}
-```
 
 #### 腿部转动方程
 
@@ -202,15 +190,4 @@ I_{l} \ddot{\theta}_{l} & =\tau_{l}-\tau_{w} \\
 \end{aligned}
 ```
 
-
-小角度线性化：
-
-```math
-\begin{aligned}
-(I_{l}+m_{b}l\,l_{w})\ddot{\theta}_{l} & =\tau_{l}-\tau_{w}\Big(1+\frac{l_{w}}{R_{w}}\Big)+(m_{w}-m_{b})l_{w}\ddot{x}-m_{b}gl_{b}\theta_{l} \\\\
- & +gl_{w}(2m_{b}+m_{l})
-\end{aligned}
-```
-
-其中 $`gl_{w}(2m_{b}+m_{l})`$ 为平衡常数项，在平衡点处由关节力矩平衡；整理 $`\dot{x}=Ax+Bu`$ 时消去即可。
 
