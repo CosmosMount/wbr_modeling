@@ -65,11 +65,11 @@ code/
 
 | 模型 | 状态维 | 输入 | 文档 |
 |------|--------|------|------|
-| `single` | 6：`[x, ẋ, θ_l, θ̇_l, θ_b, θ̇_b]` | `[τ_w, τ_l]` | [05](05_newton_euler_single.md) |
-| `dual` | 10：含 `φ` 与左右腿 | `[τ_wl, τ_wr, τ_ll, τ_lr]` | [06](06_newton_euler_dual.md) |
-| `dual_offset` | 10：同 `dual` | 同 `dual` | [07](07_newton_euler_dual_with_offset.md) |
+| [`single`](code/moodeling/single) | 6：`[x, ẋ, θ_l, θ̇_l, θ_b, θ̇_b]` | `[τ_w, τ_l]` | [05](05_newton_euler_single.md) |
+| [`dual`](code/moodeling/dual) | 10：含 `φ` 与左右腿 | `[τ_wl, τ_wr, τ_ll, τ_lr]` | [06](06_newton_euler_dual.md) |
+| [`dual_offset`](code/moodeling/dual_offset) | 10：同 `dual` | 同 `dual` | [07](07_newton_euler_dual_with_offset.md) |
 
-共享物理常数见 [`code/modeling/params.m`](code/modeling/params.m)。
+共享物理常数见 [`code/modeling/params.m`](code/modeling/params.m)。如果希望对比两套参数差异，可以使用 [`code/modeling/comparison.html`](code/modeling/comparison.html)
 
 ### VMC 代码（`code/vmc/`）
 
@@ -77,8 +77,8 @@ code/
 
 | 文件 | 说明 |
 |------|------|
-| [`vmc_serial.hpp`](code/vmc/vmc_serial.hpp) | 串联腿雅可比与力矩映射 |
-| [`vmc_parallel.hpp`](code/vmc/vmc_parallel.hpp) | 偏置并联腿 `(l, φ)` 运动学与 `Jᵀ` 映射 |
+| [`vmc_serial.hpp`](code/vmc/vmc_serial.hpp) | 偏置并联腿雅可比与力矩映射 |
+| [`vmc_parallel.hpp`](code/vmc/vmc_parallel.hpp) | 并联腿 `(l, φ)` 运动学与 `Jᵀ` 映射 |
 
 ## 使用方式
 
