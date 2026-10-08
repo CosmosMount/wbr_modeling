@@ -6,9 +6,9 @@
 
 | 符号 | 含义与正方向 |
 |------|------|
-| $F_{s,l}$、$F_{s,r}$ | 左、右腿对机身的轴向支撑力，沿腿轴指向机身为正；下标$s$ = support force。 |
-| $F_{l,l}$、$F_{l,r}$ | 左、右腿对机身的作用力，向上为正 |
-| $F_{N,l}$、$F_{N,r}$ |地面对轮子的法向力|
+| $F_{s,l}$,$F_{s,r}$ | 左、右腿对机身的轴向支撑力，沿腿轴指向机身为正；下标$s$ = support force。 |
+| $F_{l,l}$,$F_{l,r}$ | 左、右腿对机身的作用力，向上为正 |
+| $F_{N,l}$,$F_{N,r}$ |地面对轮子的法向力|
 
 仅考虑轴向传力，且腿轴与世界竖直方向夹角为 $\gamma$ (roll为$\gamma$）时，$F^v_{l,i}=F_{s,i}\cos\gamma$（$i=l,r$)
 
@@ -179,7 +179,7 @@ F_\Sigma=F_{s,l}+F_{s,r},\qquad
 F_\Delta=F_{s,l}-F_{s,r}.
 ```
 
-平衡值为 $F_{\Sigma,eq}=Mg$、$F_{\Delta,eq}=0$。令 $\delta v=[\delta F_\Delta,\delta F_\Sigma]^T$，则：
+平衡值为 $F_{\Sigma,eq}=Mg$, $F_{\Delta,eq}=0$。令 $\delta v=[\delta F_\Delta, \delta F_\Sigma]^T$，则：
 
 ```math
 \delta\dot x=A\delta x+
