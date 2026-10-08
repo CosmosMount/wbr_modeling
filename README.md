@@ -22,6 +22,7 @@
 | [05_newton_euler_single.md](05_newton_euler_single.md) | 单腿建模（双腿合并） | [`code/modeling/single/`](code/modeling/single/) |
 | [06_newton_euler_dual.md](06_newton_euler_dual.md) | 双腿建模（含 yaw 状态） | [`code/modeling/dual/`](code/modeling/dual/) |
 | [07_newton_euler_dual_with_offset.md](07_newton_euler_dual_with_offset.md) | 双腿质心偏移建模（参考转轴、显式平衡点） | [`code/modeling/dual_offset/`](code/modeling/dual_offset/) |
+| [16_leg_length_and_roll.md](16_leg_length_and_roll.md) | 腿长与高度 / Roll 的近似关系、支撑力约定 | 待验证 |
 
 ### 物理建模（拉格朗日）
 
@@ -39,6 +40,7 @@
 | [12_odometry.md](12_odometry.md) | 卡尔曼滤波里程计（IMU + 轮速融合） | 已完成 |
 | [13_disturbance_observer.md](13_disturbance_observer.md) | 扰动观测器 | 待补充 |
 | [14_state_machine.md](14_state_machine.md) | 状态机 | 待补充 |
+
 
 ## 代码结构
 
@@ -153,6 +155,6 @@ run('fit.m')
   ↓
 fit.m 生成部署用增益表
   ↓
-11 离地/跳跃  ·  12 里程计  ·  13/14（待补充）
+11 离地/跳跃  ·  12 里程计  ·  16 腿长与 Roll  ·  13/14（待补充）
 ```
 
